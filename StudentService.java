@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class StudentService {
 
     private StudentRepository studentRepository;
@@ -38,4 +40,45 @@ public class StudentService {
         validateEmail(email);
     }
 
+    public Student addStudent(String name, int age, String course, String email){
+        validateStudentInput(name, age, course, email);
+        Student student = new Student(nextId++, name, age, course, email);
+        studentRepository.addStudent(student);
+        return student;
+    }
+
+    public List<Student> getAllStudents(){
+        return studentRepository.getAllStudents();
+    }
+
+    public Student findStudentById(int id){
+        return studentRepository.findById(id);
+    }
+
+    public boolean deleteStudentById(int id){
+        return studentRepository.deleteById(id);
+    }
+
+    public Student updateStudent(int id, String name, int age, String course, String email){
+
+        Student student = findStudentById(id);
+        if(student == null) throw new IllegalArgumentException("Student not found");
+
+        if(name != null && !name.trim().isEmpty()){
+            student.setName(name);
+        }
+
+        if(age > 0){
+            student.setAge(age);
+        }
+
+        if(course != null && !course.trim().isEmpty()){
+            student.setCourse(course);
+        }
+
+        if(email != null && !email.trim().isEmpty()){
+            student.setEmail(email);
+        }
+        return student;   
+    }
 }
