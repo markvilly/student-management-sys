@@ -61,7 +61,7 @@ public class StudentService {
         return s;
     }
 
-    public Student updateStudent(int id, String name, Integer age, String course, String email){
+    public Student updateStudent(int id, String name, String course, String email){
 
         Student student = findStudentById(id);
        
@@ -70,10 +70,10 @@ public class StudentService {
             student.setName(name);
         }
         
-       if(age != null){
-            validateAge(age);
-            student.setAge(age);
-        }
+    //    if(age != null){
+    //         validateAge(age);
+    //         student.setAge(age);
+    //     }
         
         if(course != null && !course.trim().isEmpty()){
             validateCourse(course);
