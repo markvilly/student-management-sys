@@ -1,12 +1,11 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class StudentRepository {
 
-    private ArrayList<Student> students = new ArrayList<>();
+    private final List<Student> students = new ArrayList<>();
 
-
-    
     public void addStudent(Student student){
 
         students.add(student);

@@ -1,8 +1,8 @@
-import java.util.*;
+import java.util.List;
 
 public class StudentService {
 
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
     private int nextId = 1;
 
     public StudentService(StudentRepository repo){
@@ -16,8 +16,8 @@ public class StudentService {
     }
 
     private void validateAge(int age){
-        if(age<4){
-            throw new IllegalArgumentException("Age cannot be less than 0");
+        if(age<=0){
+            throw new IllegalArgumentException("Age must be greater than 0");
         }
     }
 
@@ -31,7 +31,11 @@ public class StudentService {
         if(email == null || email.trim().isEmpty()){
             throw new IllegalArgumentException("Email cannot be null or empty");
         }
+        if(!email.contains("@")){
+            throw new IllegalArgumentException("Email must contain @");
+        }
     }
+    
 
     private void validateStudentInput(String name, int age, String course, String email){
         validateName(name);
@@ -52,33 +56,48 @@ public class StudentService {
     }
 
     public Student findStudentById(int id){
-        return studentRepository.findById(id);
+        Student s = studentRepository.findById(id);
+        if(s == null) throw new IllegalArgumentException("Student not found");
+        return s;
     }
 
-    public boolean deleteStudentById(int id){
-        return studentRepository.deleteById(id);
-    }
-
-    public Student updateStudent(int id, String name, int age, String course, String email){
+    public Student updateStudent(int id, String name, Integer age, String course, String email){
 
         Student student = findStudentById(id);
-        if(student == null) throw new IllegalArgumentException("Student not found");
-
+       
         if(name != null && !name.trim().isEmpty()){
+            validateName(name);
             student.setName(name);
         }
-
-        if(age > 0){
+        
+       if(age != null){
+            validateAge(age);
             student.setAge(age);
         }
-
+        
         if(course != null && !course.trim().isEmpty()){
+            validateCourse(course);
             student.setCourse(course);
         }
-
         if(email != null && !email.trim().isEmpty()){
+            validateEmail(email);
             student.setEmail(email);
         }
-        return student;   
+       
+        return student;
+    }
+
+    public boolean deleteStudent(int id){
+        boolean deleted = studentRepository.deleteById(id);
+        if(!deleted){
+            throw new IllegalArgumentException("Student not found");
+        }
+        return true;
+    }
+
+    public void seedData(){
+        addStudent("John Jones", 20, "Computer Science", "john@gmail.com");
+        addStudent("Jane Smith", 22, "Mathematics", "janesmith@gmail.com");
+        addStudent("Bob Johnson", 21, "Physics", "bobjohns@gmail.com");
     }
 }
