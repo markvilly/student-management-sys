@@ -34,9 +34,11 @@ public class Main {
                     break;
                 case "3":
                     // TODO update student
+                    updateStudentUI(sc, service);
                     break;
                 case "4":
                     // TODO delete student
+                    deleteStudentUI(sc, service);
                     break;
                 case "5":
                     System.out.println("Goodbye!");
@@ -112,6 +114,15 @@ public class Main {
         service.updateStudent(id, nameValue, courseValue, emailValue);
         System.out.println("Student updated successfully");
         
+
+    }
+
+    private static void deleteStudentUI(Scanner sc, StudentService service){
+        System.out.println("Enter the student's ID: ");
+        int id = Integer.parseInt(sc.nextLine());
+        service.deleteStudent(id);
+
+        System.out.println("Student deleted successfully");
 
     }
 }
