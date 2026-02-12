@@ -25,19 +25,15 @@ public class Main {
             try{
                 switch (choice) {
                 case "1":
-                    // TODO add student
                     addStudentUI(sc, service);
                     break;
                 case "2":
-                    // TODO view student
                     viewStudenstUI(sc, service);
                     break;
                 case "3":
-                    // TODO update student
                     updateStudentUI(sc, service);
                     break;
                 case "4":
-                    // TODO delete student
                     deleteStudentUI(sc, service);
                     break;
                 case "5":
@@ -50,12 +46,7 @@ public class Main {
             }catch(IllegalAccessError e){
                 System.out.println("Error: " + e.getMessage());
             }
-
-        }
-       
-
-        // sc.close();
-
+        }    
     }
      private static void addStudentUI(Scanner sc, StudentService service){
                     
