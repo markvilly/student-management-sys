@@ -46,7 +46,8 @@ public class StudentService {
 
     public Student addStudent(String name, int age, String course, String email){
         validateStudentInput(name, age, course, email);
-        Student student = new Student(nextId++, name, age, course, email);
+        int id = studentRepository.getNextId();
+        Student student = new Student(id, name, age, course, email);
         studentRepository.addStudent(student);
         return student;
     }
@@ -96,6 +97,10 @@ public class StudentService {
     }
 
     public void seedData(){
+        if(!studentRepository.getAllStudents().isEmpty()){
+            return;
+        }
+        
         addStudent("John Jones", 20, "Computer Science", "john@gmail.com");
         addStudent("Jane Smith", 22, "Mathematics", "janesmith@gmail.com");
         addStudent("Bob Johnson", 21, "Physics", "bobjohns@gmail.com");
